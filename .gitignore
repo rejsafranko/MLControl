@@ -1,4 +1,10 @@
+# Python env
 env
+
+# build dirs
+build
+mlcontrol.egg-info
+
+# credentials
 credentials.json
 token.json
-mlcontrol.egg-info
