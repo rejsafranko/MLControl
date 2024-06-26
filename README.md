@@ -1,5 +1,9 @@
 # MLControl
 
+
+[IN DEVELOPMENT] ❗❗❗
+
+
 MLControl is a command-line tool designed to help manage machine learning experiment workflows on Google Drive and Vast.ai. This tool allows you to create project directory templates and upload local data directories to Google Drive effortlessly.
 
 ## Features
@@ -36,7 +40,7 @@ Before using `mlcontrol`, you need to set up Google Drive API credentials.
     - Configure the consent screen if prompted.
     - Select "Desktop app" and click "Create".
     - Download the JSON file and rename it to `credentials.json`.
-    - Place the `credentials.json` file in the same directory as your script.
+    - Place the `credentials.json` file in the root directory of your project.
 
 ## Usage
 
