@@ -11,8 +11,8 @@ MLControl is a command-line tool designed to help manage machine learning experi
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/mlcontrol.git
-    cd mlcontrol
+    git clone https://github.com/rejsafranko/MLControl.git
+    cd MLControl
     ```
 
 2. **Install the CLI tool**:
