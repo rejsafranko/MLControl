@@ -1,4 +1,6 @@
 import os
+import sys
+import click
 import google.auth
 import google.auth.transport.requests
 import google.oauth2.credentials
@@ -181,3 +183,21 @@ class Services:
         dataset_name = path.split("/")[-1]
 
         return dataset_name
+
+    def custom_progress_bar(self, iterable, prefix="", size=60, file=sys.stdout):
+        count = len(iterable)
+
+        def show(j):
+            x = int(size * j / count)
+            click.echo(
+                f"{prefix}[{'#' * x}{'.' * (size - x)}] {j}/{count}",
+                file=file,
+                nl=False,
+            )
+            file.flush()
+
+        show(0)
+        for i, item in enumerate(iterable):
+            yield item
+            show(i + 1)
+        click.echo("", file=file)
