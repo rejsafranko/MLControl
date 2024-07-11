@@ -53,10 +53,8 @@ def upload(local_directory: str, project_name: str) -> None:
         return
 
     try:
-        with tqdm(
-            total=len(os.listdir(local_directory)), desc="Uploading files"
-        ) as pbar:
-            for root, dirs, files in os.walk(local_directory):
+        for root, dirs, files in os.walk(local_directory):
+            with click.progressbar(len(os.walk(local_directory))) as pbar:
                 for filename in files:
                     file_path = os.path.join(root, filename)
                     file_metadata = {"name": filename, "parents": [dataset_folder_id]}
