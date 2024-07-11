@@ -13,12 +13,10 @@ def gpus(help, filters) -> None:
 disk_space: float       disk storage space, in GB
 gpu_arch: string        host machine gpu architecture (e.g. nvidia, amd)
 gpu_ram: float          per GPU RAM in GB
-rentable: bool          is the instance currently rentable
-verified: bool          is the machine verified
             """
         )
         return
-    command = f"vastai search offers '{filters}'"
+    command = f"vastai search offers '{filters} rentable=True verified=True'"
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
