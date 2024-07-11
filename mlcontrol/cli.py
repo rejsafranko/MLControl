@@ -1,6 +1,5 @@
 import os
 import click
-import subprocess
 import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
@@ -16,7 +15,11 @@ def mlcontrol():
     pass
 
 
-def create_project(project_name: str) -> None:
+@click.command()
+@click.argument("project_name")
+def init(project_name: str) -> None:
+    """Initialize a new MLOps project on Google Drive."""
+    click.echo(f"Initializing new MLOps project: {project_name}")
     service = SERVICES.authenticate()
     project_id = SERVICES.create_directory(service, project_name)  # Root directory.
     SERVICES.create_directory(service, "data", project_id)  # Subdirectory.
@@ -25,18 +28,15 @@ def create_project(project_name: str) -> None:
 
 
 @click.command()
+@click.argument("local_directory")
 @click.argument("project_name")
-def init(project_name: str) -> None:
-    """Initialize a new MLOps project on Google Drive."""
-    click.echo(f"Initializing new MLOps project: {project_name}")
-    create_project(project_name)
-
-
-def upload_data(local_directory: str, drive_directory_name: str) -> None:
+def upload(local_directory: str, project_name: str) -> None:
+    """Upload a local data directory to Google Drive."""
+    click.echo(f"Uploading data to: {project_name}")
     service = SERVICES.authenticate()
 
     try:
-        drive_directory_id = SERVICES.find_folder_by_name(service, drive_directory_name)
+        drive_directory_id = SERVICES.find_folder_by_name(service, project_name)
     except ValueError as e:
         click.echo(f"Error: {e}")
         return
@@ -54,25 +54,40 @@ def upload_data(local_directory: str, drive_directory_name: str) -> None:
             ).execute()
 
     click.echo(
-        f"Data from {local_directory} uploaded to Drive folder '{drive_directory_name}' with ID: {drive_directory_id}"
+        f"Data from {local_directory} uploaded to Drive folder '{project_name}' with ID: {drive_directory_id}"
     )
 
 
 @click.command()
-@click.argument("local_directory")
-@click.argument("project_name")
-def upload(local_directory, project_name):
-    """Upload a local data directory to Google Drive."""
-    click.echo(f"Uploading data to: {project_name}")
-    subprocess.Popen(
-        ["python", "mlcontrol.py", "upload_data", local_directory, project_name],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+@click.command("project_name")
+@click.option("-d", "folder_type", flag_value="data", help="List datasets.")
+@click.option("-m", "folder_type", flag_value="models", help="List models.")
+def list(project_name: str, folder_type: str) -> None:
+    """List datasets for a selected project."""
+    if not folder_type:
+        click.echo("Please specify either -d for data or -m for models.")
+        return
+    service = SERVICES.authenticate()
+    click.echo(f"Listing data for the {project_name} project.")
+    try:
+        project_id = SERVICES.find_folder_by_name(service, project_name)
+        data_folder_id = SERVICES.find_folder_by_name(service, folder_type, parent_id=project_id)
+        subdirectories = SERVICES.list_folders(service, data_folder_id)
+        if not subdirectories:
+            raise googleapiclient.errors.HttpError(f"No {folder_type} found in project '{project_name}'.")
+        click.echo(f"Found {folder_type}:")
+        for subdirectory in subdirectories:
+            click.echo(f"- {subdirectory["name"]} (ID: {subdirectory["id"]})")
+    except ValueError as e:
+        click.echo(f"Error: {e}")
+    except googleapiclient.errors.HttpError as e:
+        click.echo(f"Google Drive API Error: {e}")
+
 
 
 mlcontrol.add_command(init)
 mlcontrol.add_command(upload)
+mlcontrol.add_command(list)
 
 if __name__ == "__main__":
     mlcontrol()
