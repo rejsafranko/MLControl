@@ -54,7 +54,7 @@ Before using `mlcontrol`, you need to set up Google Drive API credentials.
 To initialize a new MLOps project on Google Drive:
 
 ```sh
-mlcontrol init ProjectName
+mlcontrol init [PROJECT_NAME]
 ```
 
 This command creates a new project directory with subdirectories data/ and models/.
@@ -63,7 +63,16 @@ This command creates a new project directory with subdirectories data/ and model
 To upload a local data directory to an existing project on Google Drive:
 
 ```sh
-mlcontrol upload /path/to/local/data drive_folder_id
+mlcontrol upload [/path/to/local/data] [PROJECT_NAME] 
 ```
 
-Replace /path/to/local/data with the path to your local data directory and drive_folder_id with the Google Drive folder ID where you want to upload the data.
+Replace /path/to/local/data with the path to your local data directory and provide the project name where you want to upload the data.
+
+### List datasets or models in project directory
+To list datasets or models in an existing project on Google Drive:
+
+```sh
+mlcontrol list [-d/-m] [PROJECT_NAME] 
+```
+
+-d argument is for datasets, -m argument is for models
