@@ -11,6 +11,7 @@ setup(
         "google-auth-oauthlib==1.2.0",
         "google-auth-httplib2==0.2.0",
         "vastai==0.2.5",
+        "tqdm==4.66.4",
     ],
     entry_points={
         "console_scripts": [

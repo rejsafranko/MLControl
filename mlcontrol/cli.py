@@ -5,7 +5,7 @@ import subprocess
 import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
-
+from tqdm import tqdm
 from mlcontrol.Services import Services
 from mlcontrol.Exceptions import SubdirectoryNotFoundError
 
@@ -53,7 +53,7 @@ def upload(local_directory: str, project_name: str) -> None:
         return
 
     for root, dirs, files in os.walk(local_directory):
-        for filename in files:
+        for filename in tqdm(files):
             file_path = os.path.join(root, filename)
             file_metadata = {"name": filename, "parents": [dataset_folder_id]}
             media = MediaFileUpload(file_path, resumable=True)
