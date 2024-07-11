@@ -3,6 +3,11 @@
 
 [IN DEVELOPMENT] ❗❗❗
 
+    __  _____    ______            __             __
+   /  |/  / /   / ____/___  ____  / /__________  / /
+  / /|_/ / /   / /   / __ \/ __ \/ __/ ___/ __ \/ / 
+ / /  / / /___/ /___/ /_/ / / / / /_/ /  / /_/ / /  
+/_/  /_/_____/\____/\____/_/ /_/\__/_/   \____/_/ 
 
 MLControl is a command-line tool designed to help manage machine learning experiment workflows on Google Drive and Vast.ai. This tool allows you to create project directory templates and upload local data directories to Google Drive effortlessly.
 
