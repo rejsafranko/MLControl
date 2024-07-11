@@ -35,6 +35,7 @@ def init(project_name: str) -> None:
 def upload(local_directory: str, project_name: str) -> None:
     """Upload a local data directory to Google Drive."""
     click.echo(f"Uploading data to: {project_name}")
+    sys.stdout.flush()
     service = SERVICES.authenticate()
     try:
         project_id = SERVICES.find_folder_by_name(service, project_name)
