@@ -141,3 +141,33 @@ class Services:
             raise googleapiclient.errors.HttpError(
                 f"An error occurred while searching for folder '{folder_name}' on Google Drive: {e}"
             )
+
+    def list_folders(
+        self, service: googleapiclient.discovery.Resource, parent_id: str
+    ) -> list[dict]:
+        """
+        List all folders within a specified parent folder on Google Drive.
+
+        Args:
+            service (googleapiclient.discovery.Resource): An authenticated Google Drive service object.
+            parent_id (str): The ID of the parent folder.
+
+        Returns:
+            list[dict]: A list of dictionaries, each representing a subfolder with its 'name' and 'id'.
+
+        Raises:
+            googleapiclient.errors.HttpError: If an error occurs while interacting with the Google Drive API.
+        """
+        query = f"'{parent_id}' in parents and mimeType='application/vnd.google-apps.folder'"
+        try:
+            response = (
+                service.files()
+                .list(q=query, spaces="drive", fields="files(id, name)")
+                .execute()
+            )
+            folders = response.get("files", [])
+            return folders
+        except googleapiclient.errors.HttpError as e:
+            raise googleapiclient.errors.HttpError(
+                f"An error occurred while listing folders in parent '{parent_id}' on Google Drive: {e}"
+            )
