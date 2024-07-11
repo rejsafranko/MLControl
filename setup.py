@@ -13,7 +13,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "mlcontrol=mlcontrol.cli:mlcontrol",
+            "mlcontrol=mlcontrol.cli:main",
         ],
     },
 )

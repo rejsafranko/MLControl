@@ -1,5 +1,7 @@
 import os
+import sys
 import click
+import pyfiglet
 import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
@@ -12,7 +14,6 @@ SERVICES = Services()
 
 @click.group()
 def mlcontrol():
-    """CLI tool for MLOps tasks."""
     pass
 
 
@@ -100,5 +101,26 @@ mlcontrol.add_command(init)
 mlcontrol.add_command(upload)
 mlcontrol.add_command(list)
 
-if __name__ == "__main__":
+
+def print_banner():
+    print(
+        """
+    __  _____    ______            __             __
+   /  |/  / /   / ____/___  ____  / /__________  / /
+  / /|_/ / /   / /   / __ \/ __ \/ __/ ___/ __ \/ / 
+ / /  / / /___/ /___/ /_/ / / / / /_/ /  / /_/ / /  
+/_/  /_/_____/\____/\____/_/ /_/\__/_/   \____/_/   
+                                                   
+CLI tool for MLOps tasks. 
+        """
+    )
+
+
+def main():
+    if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] == "mlcontrol"):
+        print_banner()
     mlcontrol()
+
+
+if __name__ == "__main__":
+    pass
