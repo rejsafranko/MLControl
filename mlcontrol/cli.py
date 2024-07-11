@@ -1,9 +1,6 @@
 import sys
 import click
-from mlcontrol.Services import Services
 from commands import init, upload, list, gpus
-
-SERVICES = Services()
 
 
 @click.group()

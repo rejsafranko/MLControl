@@ -1,7 +1,6 @@
 import click
 import googleapiclient.errors
-from mlcontrol.Services import Services
-from mlcontrol.Exceptions import SubdirectoryNotFoundError
+from utils import Services, SubdirectoryNotFoundError
 
 SERVICES = Services()
 
