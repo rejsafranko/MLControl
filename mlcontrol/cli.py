@@ -99,6 +99,7 @@ def list(project_name: str, folder_type: str) -> None:
 
 @click.command()
 def gpus():
+    """Lists available GPUs provided by Vast.ai cloud service."""
     command = "vastai search offers"
     try:
         subprocess.run(command, shell=True, check=True)
