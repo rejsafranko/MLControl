@@ -11,11 +11,9 @@ from mlcontrol.Exceptions import SubdirectoryNotFoundError
 
 SERVICES = Services()
 
-
 @click.group()
 def mlcontrol():
     pass
-
 
 @click.command()
 @click.argument("project_name")
@@ -27,7 +25,6 @@ def init(project_name: str) -> None:
     SERVICES.create_directory(service, "data", project_id)  # Subdirectory.
     SERVICES.create_directory(service, "models", project_id)  # Subdirectory.
     click.echo(f"Project {project_name} created with ID: {project_id}")
-
 
 @click.command()
 @click.argument("local_directory")
@@ -63,6 +60,7 @@ def upload(local_directory: str, project_name: str) -> None:
                     service.files().create(
                         body=file_metadata, media_body=media, fields="id"
                     ).execute()
+                    sys.stdout.flush()  # Ensure the progress bar updates
 
         click.echo(
             f"Data from {local_directory} uploaded to Drive folder '{project_name}'."
@@ -70,7 +68,6 @@ def upload(local_directory: str, project_name: str) -> None:
 
     except Exception as e:
         click.echo(f"Error uploading data: {e}")
-
 
 @click.command()
 @click.argument("project_name")
@@ -102,7 +99,6 @@ def list(project_name: str, folder_type: str) -> None:
     except googleapiclient.errors.HttpError as e:
         click.echo(f"Google Drive API Error: {e}")
 
-
 @click.command()
 @click.option("--help", "help", flag_value=True)
 def gpus(help) -> None:
@@ -125,12 +121,10 @@ verified: bool          is the machine verified
         click.echo(f"Error: {e}")
         raise click.Abort()
 
-
 mlcontrol.add_command(init)
 mlcontrol.add_command(upload)
 mlcontrol.add_command(list)
 mlcontrol.add_command(gpus)
-
 
 def print_banner():
     print(
@@ -145,12 +139,10 @@ CLI tool for MLOps tasks.
         """
     )
 
-
 def main():
     if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] == "mlcontrol"):
         print_banner()
     mlcontrol()
 
-
 if __name__ == "__main__":
-    pass
+    main()
