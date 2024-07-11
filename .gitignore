@@ -1,6 +1,8 @@
 # Python env
 env
 
+__pycache__
+
 # build dirs
 build
 mlcontrol.egg-info
