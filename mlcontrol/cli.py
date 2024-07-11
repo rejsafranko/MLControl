@@ -1,6 +1,6 @@
 import sys
 import click
-from commands import init, upload, list, gpus
+from mlcontrol.commands import init, upload, list, gpus
 
 
 @click.group()

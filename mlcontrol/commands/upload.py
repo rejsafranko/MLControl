@@ -3,7 +3,7 @@ import sys
 import click
 import googleapiclient
 import googleapiclient.http
-from utils import Services
+from mlcontrol.utils import Services
 
 SERVICES = Services()
 

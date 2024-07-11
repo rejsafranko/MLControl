@@ -1,5 +1,5 @@
 import click
-from utils import Services
+from mlcontrol.utils import Services
 
 SERVICES = Services()
 
