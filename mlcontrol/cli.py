@@ -54,15 +54,14 @@ def upload(local_directory: str, project_name: str) -> None:
 
     try:
         for root, dirs, files in os.walk(local_directory):
-            with click.progressbar(len(os.walk(local_directory))) as pbar:
-                for filename in files:
+            with click.progressbar(files, label="Uploading images") as pbar:
+                for filename in pbar:
                     file_path = os.path.join(root, filename)
                     file_metadata = {"name": filename, "parents": [dataset_folder_id]}
                     media = MediaFileUpload(file_path, resumable=True)
                     service.files().create(
                         body=file_metadata, media_body=media, fields="id"
                     ).execute()
-                    pbar.update(1)
 
         click.echo(
             f"Data from {local_directory} uploaded to Drive folder '{project_name}'."
