@@ -1,6 +1,7 @@
 import os
 import sys
 import click
+import subprocess
 import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
@@ -96,9 +97,20 @@ def list(project_name: str, folder_type: str) -> None:
         click.echo(f"Google Drive API Error: {e}")
 
 
+@click.command()
+def gpus():
+    command = "vastai search offers"
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        click.echo(f"Error: {e}")
+        raise click.Abort()
+
+
 mlcontrol.add_command(init)
 mlcontrol.add_command(upload)
 mlcontrol.add_command(list)
+mlcontrol.add_command(gpus)
 
 
 def print_banner():

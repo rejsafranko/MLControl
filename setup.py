@@ -10,7 +10,7 @@ setup(
         "google-auth==2.30.0",
         "google-auth-oauthlib==1.2.0",
         "google-auth-httplib2==0.2.0",
-        "vastiai==0.2.5",
+        "vastai==0.2.5",
     ],
     entry_points={
         "console_scripts": [
