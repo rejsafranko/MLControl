@@ -184,7 +184,7 @@ class Services:
 
         return dataset_name
 
-    def custom_progress_bar(self, iterable, prefix="", size=60, file=sys.stdout):
+    def custom_progress_bar(self, iterable, prefix, size, file=sys.stdout):
         count = len(iterable)
 
         def show(j):
