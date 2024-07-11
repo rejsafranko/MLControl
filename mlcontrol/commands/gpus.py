@@ -3,10 +3,10 @@ import subprocess
 
 
 @click.command()
+@click.argument("filters")
 @click.option("--help", "help", flag_value=True)
-def gpus(help) -> None:
+def gpus(help, filters) -> None:
     """Lists available GPUs provided by Vast.ai cloud service."""
-    command = "vastai search offers"
     if help:
         click.echo(
             """
@@ -18,6 +18,7 @@ verified: bool          is the machine verified
             """
         )
         return
+    command = f"vastai search offers '{filters}'"
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
