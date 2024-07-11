@@ -171,3 +171,13 @@ class Services:
             raise googleapiclient.errors.HttpError(
                 f"An error occurred while listing folders in parent '{parent_id}' on Google Drive: {e}"
             )
+
+    def parse_dataset_name(self, path: str) -> str:
+        # Remove trailing slash if present
+        if path.endswith("/"):
+            path = path[:-1]
+
+        # Split path by '/' and return the last element
+        dataset_name = path.split("/")[-1]
+
+        return dataset_name
