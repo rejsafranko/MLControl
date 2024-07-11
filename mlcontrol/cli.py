@@ -52,18 +52,26 @@ def upload(local_directory: str, project_name: str) -> None:
         click.echo(f"Google Drive API Error: {e}")
         return
 
-    for root, dirs, files in os.walk(local_directory):
-        for filename in tqdm(files):
-            file_path = os.path.join(root, filename)
-            file_metadata = {"name": filename, "parents": [dataset_folder_id]}
-            media = MediaFileUpload(file_path, resumable=True)
-            service.files().create(
-                body=file_metadata, media_body=media, fields="id"
-            ).execute()
+    try:
+        with tqdm(
+            total=len(os.listdir(local_directory)), desc="Uploading files"
+        ) as pbar:
+            for root, dirs, files in os.walk(local_directory):
+                for filename in files:
+                    file_path = os.path.join(root, filename)
+                    file_metadata = {"name": filename, "parents": [dataset_folder_id]}
+                    media = MediaFileUpload(file_path, resumable=True)
+                    service.files().create(
+                        body=file_metadata, media_body=media, fields="id"
+                    ).execute()
+                    pbar.update(1)
 
-    click.echo(
-        f"Data from {local_directory} uploaded to Drive folder '{project_name}'."
-    )
+        click.echo(
+            f"Data from {local_directory} uploaded to Drive folder '{project_name}'."
+        )
+
+    except Exception as e:
+        click.echo(f"Error uploading data: {e}")
 
 
 @click.command()
