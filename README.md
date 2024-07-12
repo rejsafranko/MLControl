@@ -24,6 +24,7 @@ MLControl is a command-line tool designed to help manage machine learning experi
 
 - **Initialize MLOps Projects**: Create a structured project directory on Google Drive.
 - **Upload Data**: Upload local data directories to your Google Drive project.
+- **Connect to a GPU machine**: Search for and connect to GPUs offered by Vast.ai cloud services.
 
 ## Installation
 
