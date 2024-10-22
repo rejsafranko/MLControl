@@ -86,7 +86,7 @@ mlcontrol upload [-d/-m] [/path/to/local/data] [PROJECT_NAME]
 
 Replace /path/to/local/data with the path to your local file and provide the project name where you want to upload the file.
 
-### List datasets or models in project directory
+### List data or models in project directory
 To list datasets or models in an existing project on Google Drive:
 
 ```sh
