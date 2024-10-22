@@ -69,6 +69,14 @@ mlcontrol init [PROJECT_NAME]
 
 This command creates a new project directory with subdirectories data/ and models/.
 
+### List projects
+
+To list projects at the top level of your storage:
+
+ ```sh
+mlcontrol list-projects
+```
+
 ### Upload local data or model file
 To upload a local data file (.csv, .png, etc.) or a local model file (.pth, .keras, etc.) to an existing project on Google Drive:
 
