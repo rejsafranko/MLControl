@@ -1,6 +1,6 @@
 import sys
 import click
-from mlcontrol.commands import init, upload, list, gpus
+from mlcontrol.commands import init, upload, list, gpus, list_projects
 
 
 @click.group()
@@ -11,6 +11,7 @@ def mlcontrol():
 mlcontrol.add_command(init)
 mlcontrol.add_command(upload)
 mlcontrol.add_command(list)
+mlcontrol.add_command(list_projects)
 mlcontrol.add_command(gpus)
 
 
