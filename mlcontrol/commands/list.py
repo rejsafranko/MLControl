@@ -10,7 +10,7 @@ SERVICES = Services()
 @click.option("-d", "folder_type", flag_value="data", help="List datasets.")
 @click.option("-m", "folder_type", flag_value="models", help="List models.")
 def list(project_name: str, folder_type: str) -> None:
-    """List datasets for a selected project."""
+    """List data or models for a selected project."""
     if not folder_type:
         click.echo("Please specify either -d for data or -m for models.")
         return
