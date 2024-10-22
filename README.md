@@ -17,8 +17,10 @@ MLControl is a command-line tool designed to help manage machine learning experi
 - [Setup](#setup)
 - [Usage](#usage)
   - [Initialize a new MLOps project](#initialize-a-new-mlops-project)
-  - [Upload local data directory](#upload-local-data-directory)
-  - [List datasets or models in project directory](#list-datasets-or-models-in-project-directory)
+  - [List projects](#list-projects)
+  - [Upload local data or model file](#upload-local-data-or-mode-file)
+  - [List data or models in project directory](#list-data-or-models-in-project-directory)
+  - [Search available GPUs](#search-available-gpus)
 
 ## Features
 
