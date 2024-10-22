@@ -86,3 +86,17 @@ mlcontrol list [-d/-m] [PROJECT_NAME]
 ```
 
 -d argument is for datasets, -m argument is for models
+
+### Search available GPUs
+
+Example command to search for GPUs with supported filters:
+
+```sh
+mlcontrol gpus --gpu_ram 16 --gpu_arch nvidia --disk_space 30
+```
+
+Filter descriptions:
+
+```sh
+mlcontrol gpus --help
+```
