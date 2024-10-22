@@ -3,7 +3,9 @@ import sys
 import click
 import googleapiclient
 import googleapiclient.http
-from mlcontrol.utils import Services
+from mlcontrol.utils import Services, Spinner
+import threading
+import time
 
 SERVICES = Services()
 
@@ -27,13 +29,7 @@ def upload(upload_type, local_directory: str, project_name: str) -> None:
 
     try:
         project_id = SERVICES.find_folder_by_name(service, project_name)
-
-        # Check the upload type to determine the target folder.
-        if upload_type == "data":
-            folder_name = "data"
-        else:
-            folder_name = "models"
-
+        folder_name = "data" if upload_type == "data" else "models"
         target_folder_id = SERVICES.find_folder_by_name(
             service, folder_name, parent_id=project_id
         )
@@ -48,6 +44,12 @@ def upload(upload_type, local_directory: str, project_name: str) -> None:
         click.echo(f"Google Drive API Error: {e}")
         return
 
+    spinner = Spinner()
+    stop_spinner = threading.Event()
+    spinner_thread = threading.Thread(target=spinner.spinner, args=(stop_spinner,))
+    spinner_thread.start()
+    time.sleep(2)
+
     try:
         for root, dirs, files in os.walk(local_directory):
             files_list = list(files)
@@ -60,13 +62,18 @@ def upload(upload_type, local_directory: str, project_name: str) -> None:
                 service.files().create(
                     body=file_metadata, media_body=media, fields="id"
                 ).execute()
-                sys.stdout.flush()  # Ensure the progress bar updates
+                sys.stdout.flush()
+
+        stop_spinner.set()
+        spinner_thread.join()
 
         click.echo(
             f"{upload_type.capitalize()} from {local_directory} uploaded to Drive folder '{project_name}'."
         )
 
     except Exception as e:
+        stop_spinner.set()
+        spinner_thread.join()
         click.echo(f"Error uploading {upload_type}: {e}")
 
 
