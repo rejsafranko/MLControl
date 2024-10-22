@@ -15,7 +15,7 @@ def list(project_name: str, folder_type: str) -> None:
         click.echo("Please specify either -d for data or -m for models.")
         return
     service = SERVICES.authenticate()
-    click.echo(f"Listing data for the {project_name} project:")
+    click.echo(f"Listing {folder_type} for the {project_name} project:")
     try:
         project_id = SERVICES.find_folder_by_name(service, project_name)
         data_folder_id = SERVICES.find_folder_by_name(
