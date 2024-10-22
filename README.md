@@ -69,14 +69,14 @@ mlcontrol init [PROJECT_NAME]
 
 This command creates a new project directory with subdirectories data/ and models/.
 
-### Upload local data directory
-To upload a local data directory to an existing project on Google Drive:
+### Upload local data or model file
+To upload a local data file (.csv, .png, etc.) or a local model file (.pth, .keras, etc.) to an existing project on Google Drive:
 
 ```sh
-mlcontrol upload [/path/to/local/data] [PROJECT_NAME] 
+mlcontrol upload [-d/-m] [/path/to/local/data] [PROJECT_NAME] 
 ```
 
-Replace /path/to/local/data with the path to your local data directory and provide the project name where you want to upload the data.
+Replace /path/to/local/data with the path to your local file and provide the project name where you want to upload the file.
 
 ### List datasets or models in project directory
 To list datasets or models in an existing project on Google Drive:
